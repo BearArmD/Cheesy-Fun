@@ -87,20 +87,25 @@
     </div> <!-- Yellow bow -->
     <div id="tag">Unwrap Me!</div> <!-- Tag beside the gift button -->
 
-    <canvas id="ribbonCanvas" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9;"></canvas>
-
     <script>
         function startFun() {
             window.location.href = 'startfun.html'; // Redirect to startfun.html
         }
 
         function drawRibbon() {
-            const canvas = document.getElementById('ribbonCanvas');
-            const context = canvas.getContext('2d');
+            const giftButton = document.getElementById('giftButton');
+            const rect = giftButton.getBoundingClientRect(); // Get position of the button
 
-            // Set canvas size
-            canvas.width = 150; // Width of the gift button
-            canvas.height = 150; // Height of the gift button
+            // Create a new canvas element
+            const canvas = document.createElement('canvas');
+            canvas.width = rect.width; // Width of the gift button
+            canvas.height = rect.height; // Height of the gift button
+            canvas.style.position = 'absolute';
+            canvas.style.top = `${rect.top}px`;
+            canvas.style.left = `${rect.left}px`;
+            canvas.style.zIndex = 9; // Below the gift button
+
+            const context = canvas.getContext('2d');
 
             // Draw horizontal line
             context.strokeStyle = 'yellow'; // Color of the ribbon
@@ -115,9 +120,11 @@
             context.moveTo(canvas.width / 2, 0); // Start at top center
             context.lineTo(canvas.width / 2, canvas.height); // End at bottom center
             context.stroke();
+
+            document.body.appendChild(canvas); // Add the canvas to the body
         }
 
-        // Call drawRibbon to display it on load
+        // Call drawRibbon to display it after the window loads
         window.onload = drawRibbon;
     </script>
 </body>
