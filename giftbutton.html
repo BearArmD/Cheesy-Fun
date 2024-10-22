@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unwrap the Fun!</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0e68c;
+            font-family: Arial, sans-serif;
+        }
+        #startButton {
+            width: 150px;
+            height: 150px;
+            background-color: purple;
+            border: 5px solid lightblue;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+        .ribbon {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+        .ribbon::before, .ribbon::after {
+            content: '';
+            position: absolute;
+            background-color: yellow;
+        }
+        .ribbon::before {
+            width: 5px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .ribbon::after {
+            width: 100%;
+            height: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .bow {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+        }
+        .bow .left, .bow .right {
+            width: 40px;
+            height: 35px;
+            background-color: yellow;
+            position: relative;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+        .bow .left {
+            transform: rotate(-45deg);
+        }
+        .bow .right {
+            transform: rotate(45deg);
+        }
+        .bow .knot {
+            width: 15px;
+            height: 15px;
+            background-color: yellow;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+        #tag {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="startButton">
+        <div class="ribbon"></div> <!-- Yellow ribbon -->
+        <div class="bow">
+            <div class="left"></div>
+            <div class="right"></div>
+            <div class="knot"></div>
+        </div>
+        <div id="tag">Unwrap</div>
+    </div>
+</body>
+</html>
+
