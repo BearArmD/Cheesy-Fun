@@ -35,15 +35,15 @@
         }
         .bow {
             position: absolute;
-            top: 20%; /* Position the bow closer to the package */
+            top: 40%; /* Position the bow closer to the package */
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 11;
             display: flex; /* Use flex to align the bow parts */
         }
         .bow .left, .bow .right {
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 35px;
             background-color: yellow; /* Yellow color for the bow */
             position: relative;
             border-radius: 50%;
@@ -102,7 +102,7 @@
                 isFunStarted = true; // Set flag to true
                 setup(); // Start the setup function
 
-                music.jump(10); // Jump to 10 seconds into the music
+                music.jump(15); // Jump to 10 seconds into the music
                 music.play(); // Play the music
             }
         }
