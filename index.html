@@ -125,16 +125,32 @@
         }
 
         function draw() {
-                            // Draw intersecting lines on the package to represent the ribbon
-                stroke('lightyellow');
+            background(255);
+            if (!isFunStarted) { // Only draw the lines if fun hasn't started
+                // Draw intersecting lines on the package to represent the ribbon
+                stroke('yellow'); // Change to yellow
                 strokeWeight(5);
                 line(width / 2 - 75, height / 2, width / 2 + 75, height / 2); // Horizontal line
                 line(width / 2, height / 2 - 75, width / 2, height / 2 + 75); // Vertical line
 
-            
-            if (isFunStarted) { // Check if the fun has started
-                background(255);
+                // Draw the gift button
+                fill('purple'); // Set button color
+                rect(width / 2 - 75, height / 2 - 75, 150, 150, 10); // Draw package
+                stroke('lightblue'); // Set ribbon color
+                strokeWeight(5);
+                noFill();
+                rect(width / 2 - 75, height / 2 - 75, 150, 150, 10); // Draw package border
 
+                // Draw bow
+                noStroke();
+                fill('yellow');
+                ellipse(width / 2 - 40, height / 2 - 15, 40, 35); // Left bow
+                ellipse(width / 2 + 40, height / 2 - 15, 40, 35); // Right bow
+                fill('yellow');
+                ellipse(width / 2, height / 2, 15, 15); // Center knot
+            }
+
+            if (isFunStarted) { // Check if the fun has started
                 for (let b of balloons) {
                     b.update();
                     b.display();
