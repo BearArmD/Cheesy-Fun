@@ -127,8 +127,8 @@
         function draw() {
             background(255); // Clear the background each frame
             
-            // Draw the intersecting lines on the gift button to represent the ribbon
-            if (isFunStarted) {
+            if (!isFunStarted) {
+                // Draw the intersecting lines on the gift button to represent the ribbon
                 const buttonX = width / 2; // Center X of the button
                 const buttonY = height / 2; // Center Y of the button
                 const buttonWidth = 150; // Width of the button
@@ -143,15 +143,6 @@
             }
 
             if (isFunStarted) { // Check if the fun has started
-                for (let b of balloons) {
-                    b.update();
-                    b.display();
-                }
-                for (let c of confetti) {
-                    c.update();
-                    c.display();
-                }
-
                 // Display the image in the center
                 if (img) {
                     image(img, width / 2 - img.width / 2, height / 2 - img.height / 2);
@@ -167,6 +158,16 @@
                 textSize(12);
                 text("Music by: Bensound.com/royalty-free-music", width / 2, height - 40);
                 text("License code: MGIZKCEEOI9XHM90", width / 2, height - 20);
+
+                // Draw balloons and confetti
+                for (let b of balloons) {
+                    b.update();
+                    b.display();
+                }
+                for (let c of confetti) {
+                    c.update();
+                    c.display();
+                }
             }
         }
 
