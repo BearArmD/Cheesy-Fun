@@ -50,6 +50,37 @@
             top: 0;
             transform: translateX(-50%);
         }
+        .bow {
+            position: absolute;
+            top: 25%; /* Position the bow closer to the top of the package */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 12; /* Above the ribbons */
+            display: flex; /* Use flex to align the bow parts */
+        }
+        .bow .left, .bow .right {
+            width: 30px; /* Adjusted width */
+            height: 20px; /* Adjusted height */
+            background-color: yellow; /* Yellow color for the bow */
+            border-radius: 50%;
+            margin: 0 5px; /* Space between bow parts */
+        }
+        .bow .left {
+            transform: rotate(-45deg);
+        }
+        .bow .right {
+            transform: rotate(45deg);
+        }
+        .bow .knot {
+            width: 10px;
+            height: 10px;
+            background-color: yellow; /* Yellow color for the knot */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
         #tag {
             position: absolute;
             top: 50%;
@@ -69,6 +100,11 @@
     <div id="giftButton" onclick="startFun()">
         <div class="ribbon horizontal"></div> <!-- Horizontal ribbon -->
         <div class="ribbon vertical"></div> <!-- Vertical ribbon -->
+        <div class="bow"> <!-- Bow -->
+            <div class="left"></div>
+            <div class="right"></div>
+            <div class="knot"></div> <!-- Center knot for the bow -->
+        </div>
     </div>
     <div id="tag">Unwrap Me!</div> <!-- Tag beside the gift button -->
 
