@@ -31,20 +31,26 @@
         function preload() {
             soundFormats('mp3');
             music = loadSound('audio/jazzyfrenchy.mp3'); // Ensure the filename is correct
-            loadImage('images/cheesy.png'); // Ensure this path is correct
+            img = loadImage('images/cheesy.png'); // Ensure this path is correct
         }
 
         function setup() {
             createCanvas(windowWidth, windowHeight);
             setTimeout(() => {
                 music.play();
-                for (let i = 0; i < 10; i++) {
-                    balloons.push(new Balloon());
-                }
-                for (let i = 0; i < 50; i++) {
-                    confetti.push(new Confetti());
-                }
             }, 270); // Delay of 0.27 seconds
+
+            // Spawn balloons and confetti
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    balloons.push(new Balloon());
+                }, i * 300); // Stagger the balloon spawn by 300ms
+            }
+
+            // Spawn confetti continuously
+            for (let i = 0; i < 50; i++) {
+                confetti.push(new Confetti());
+            }
         }
 
         function draw() {
@@ -57,6 +63,9 @@
                 c.update();
                 c.display();
             }
+
+            // Display the image at the center
+            image(img, width / 2 - img.width / 2, height / 2 - img.height / 2);
         }
 
         class Balloon {
@@ -64,15 +73,19 @@
                 this.x = random(width);
                 this.y = height;
                 this.size = random(40, 60);
-                this.speed = 2; // Speed of the balloons
+                this.speed = random(1, 3); // Random speed for variety
+                this.color = color(random(255), random(255), random(255)); // Random color
             }
 
             update() {
                 this.y -= this.speed;
+                if (this.y < 0) {
+                    this.y = height; // Reset balloon position
+                }
             }
 
             display() {
-                fill(255, 0, 0);
+                fill(this.color);
                 ellipse(this.x, this.y, this.size, this.size * 1.5);
             }
         }
@@ -80,13 +93,17 @@
         class Confetti {
             constructor() {
                 this.x = random(width);
-                this.y = random(height);
+                this.y = random(-height, 0); // Start above the canvas
                 this.size = random(5, 15);
-                this.speed = 3; // Speed of the confetti
+                this.speed = random(2, 5); // Random speed for variety
             }
 
             update() {
                 this.y += this.speed;
+                if (this.y > height) {
+                    this.y = random(-height, 0); // Reset confetti position
+                    this.x = random(width); // Random x position
+                }
             }
 
             display() {
