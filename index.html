@@ -125,15 +125,15 @@
         }
 
         function draw() {
-            background(255);
+            background(255); // Clear the canvas
 
-            // Draw intersecting lines on the package to represent the ribbon
-            if (!isFunStarted) { // Only draw the lines before the fun starts
+            if (!isFunStarted) {
+                // Draw intersecting lines on the package to represent the ribbon
                 stroke('lightyellow');
                 strokeWeight(5);
                 line(width / 2 - 75, height / 2, width / 2 + 75, height / 2); // Horizontal line
                 line(width / 2, height / 2 - 75, width / 2, height / 2 + 75); // Vertical line
-            } else { // After the fun starts, draw balloons and confetti
+            } else {
                 for (let b of balloons) {
                     b.update();
                     b.display();
