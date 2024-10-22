@@ -152,4 +152,83 @@
                 for (let i = 0; i < 100; i++) {
                     confetti.push(new Confetti());
                 }
-    
+            }, 200); // Delay the first balloon by 0.2 seconds
+        }
+
+        function draw() {
+            if (isFunStarted) { // Check if the fun has started
+                background(255);
+
+                for (let b of balloons) {
+                    b.update();
+                    b.display();
+                }
+                for (let c of confetti) {
+                    c.update();
+                    c.display();
+                }
+
+                // Display the image in the center
+                if (img) {
+                    image(img, width / 2 - img.width / 2, height / 2 - img.height / 2);
+                }
+
+                // Display the cheese text centered below the image
+                textAlign(CENTER);
+                textSize(24);
+                fill(0); // Set text color to black
+                text("I reek of Cheese and whine! Yay!!", width / 2, height / 2 + img.height / 2 + 30); // Adjust the position as needed
+
+                // Display attribution text
+                textSize(12);
+                text("Music by: Bensound.com/royalty-free-music", width / 2, height - 40);
+                text("License code: MGIZKCEEOI9XHM90", width / 2, height - 20);
+            }
+        }
+
+        class Balloon {
+            constructor() {
+                this.x = random(width);
+                this.y = height;
+                this.size = random(40, 60);
+                this.speed = random(1, 3); // Random speed for balloons
+                this.color = color(random(255), random(255), random(255)); // Random color for balloons
+            }
+
+            update() {
+                this.y -= this.speed;
+                if (this.y < 0) {
+                    this.y = height; // Reset balloon position
+                }
+            }
+
+            display() {
+                fill(this.color);
+                ellipse(this.x, this.y, this.size, this.size * 1.5);
+            }
+        }
+
+        class Confetti {
+            constructor() {
+                this.x = random(width);
+                this.y = random(-height, 0); // Start above the canvas
+                this.size = random(5, 15);
+                this.speed = random(2, 5); // Random speed for confetti
+            }
+
+            update() {
+                this.y += this.speed;
+                if (this.y > height) {
+                    this.y = random(-height, 0); // Reset confetti position
+                    this.x = random(width); // Random x position
+                }
+            }
+
+            display() {
+                fill(random(255), random(255), random(255));
+                rect(this.x, this.y, this.size, this.size);
+            }
+        }
+    </script>
+</body>
+</html>
