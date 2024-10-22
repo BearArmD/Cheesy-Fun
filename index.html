@@ -13,72 +13,42 @@
             font-family: Arial, sans-serif;
             background-color: #f0e68c;
         }
-
-        #startButton {
+        #giftButton {
             position: absolute;
-            top: 50%;
             left: 50%;
+            top: 50%;
             transform: translate(-50%, -50%);
-            background-color: #ffcc00;
-            border: 5px solid #ff0000;
-            width: 200px;
-            height: 200px;
-            text-align: center;
+            width: 150px;
+            height: 150px;
+            background-color: purple; /* Purple package */
+            border: 5px solid lightblue; /* Light blue ribbon */
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            border-radius: 20px;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+            font-size: 18px;
+            color: white;
+            text-align: center;
+            z-index: 10;
         }
-
-        #startButton:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 20px;
-            height: 100%;
-            background-color: #ff0000;
-            transform: translateX(-50%);
-        }
-
-        #startButton:after {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 50%;
-            width: 100%;
-            height: 20px;
-            background-color: #ff0000;
-            transform: translateY(-50%);
-        }
-
-        #startButton span {
-            position: relative;
-            z-index: 2;
-            font-size: 24px;
-            color: #ffffff;
-            font-weight: bold;
-        }
-
-        #startButton span:before {
-            content: "Unwrap Me!";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        #attribution {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 12px;
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <!-- Gift/Preset Button -->
-    <div id="startButton">
-        <span>Unwrap Me!</span>
-    </div>
-
+    <div id="giftButton" onclick="startFun()">Unwrap Me!</div>
+    
     <script>
         let balloons = [];
         let confetti = [];
         let music;
-        let img;
+        let img; // Declare the image variable
 
         function preload() {
             soundFormats('mp3');
@@ -86,31 +56,31 @@
             img = loadImage('images/cheesy.png'); // Load the image
         }
 
+        function startFun() {
+            // Play the music and remove the gift button
+            music.play();
+            document.getElementById('giftButton').style.display = 'none'; // Hide the button
+            setup(); // Start the setup function
+        }
+
         function setup() {
             createCanvas(windowWidth, windowHeight);
-            noLoop(); // Prevents draw() from running until triggered
-
-            // Create initial balloons and confetti but do not animate them yet
-            for (let i = 0; i < 10; i++) {
-                balloons.push(new Balloon());
-            }
-            for (let i = 0; i < 100; i++) {
-                confetti.push(new Confetti());
-            }
+            setTimeout(() => {
+                // Spawn balloons
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        balloons.push(new Balloon());
+                    }, i * 500); // Stagger balloon spawn by 500ms
+                }
+                // Spawn confetti
+                for (let i = 0; i < 100; i++) {
+                    confetti.push(new Confetti());
+                }
+            }, 200); // Delay the first balloon by 0.2 seconds
         }
 
-        // Start the celebration when the button is clicked
-        function startCelebration() {
-            document.getElementById('startButton').style.display = 'none'; // Hide the present button
-            music.play(); // Play the music
-            loop(); // Start the p5 draw loop for animations
-        }
-
-        // Main drawing loop
         function draw() {
             background(255);
-
-            // Animate balloons and confetti
             for (let b of balloons) {
                 b.update();
                 b.display();
@@ -125,4 +95,61 @@
                 image(img, width / 2 - img.width / 2, height / 2 - img.height / 2);
             }
 
-      
+            // Display the cheese text centered below the image
+            textAlign(CENTER);
+            textSize(24);
+            fill(0); // Set text color to black
+            text("I reek of Cheese and whine! Yay!!", width / 2, height / 2 + img.height / 2 + 30); // Adjust the position as needed
+
+            // Display attribution text
+            textSize(12);
+            text("Music by: Bensound.com/royalty-free-music", width / 2, height - 40);
+            text("License code: MGIZKCEEOI9XHM90", width / 2, height - 20);
+        }
+
+        class Balloon {
+            constructor() {
+                this.x = random(width);
+                this.y = height;
+                this.size = random(40, 60);
+                this.speed = random(1, 3); // Random speed for balloons
+                this.color = color(random(255), random(255), random(255)); // Random color for balloons
+            }
+
+            update() {
+                this.y -= this.speed;
+                if (this.y < 0) {
+                    this.y = height; // Reset balloon position
+                }
+            }
+
+            display() {
+                fill(this.color);
+                ellipse(this.x, this.y, this.size, this.size * 1.5);
+            }
+        }
+
+        class Confetti {
+            constructor() {
+                this.x = random(width);
+                this.y = random(-height, 0); // Start above the canvas
+                this.size = random(5, 15);
+                this.speed = random(2, 5); // Random speed for confetti
+            }
+
+            update() {
+                this.y += this.speed;
+                if (this.y > height) {
+                    this.y = random(-height, 0); // Reset confetti position
+                    this.x = random(width); // Random x position
+                }
+            }
+
+            display() {
+                fill(random(255), random(255), random(255));
+                rect(this.x, this.y, this.size, this.size);
+            }
+        }
+    </script>
+</body>
+</html>
