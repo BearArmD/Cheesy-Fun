@@ -126,7 +126,19 @@
 
         function draw() {
             background(255);
-            if (!isFunStarted) { // Only draw the lines if fun hasn't started
+            
+            // Draw the light yellow lines around balloons/confetti
+            stroke('lightyellow');
+            strokeWeight(5);
+            for (let b of balloons) {
+                b.display();
+            }
+            for (let c of confetti) {
+                c.display();
+            }
+
+            // Check if the fun has started
+            if (!isFunStarted) {
                 // Draw intersecting lines on the package to represent the ribbon
                 stroke('yellow'); // Change to yellow
                 strokeWeight(5);
@@ -153,11 +165,6 @@
             if (isFunStarted) { // Check if the fun has started
                 for (let b of balloons) {
                     b.update();
-                    b.display();
-                }
-                for (let c of confetti) {
-                    c.update();
-                    c.display();
                 }
 
                 // Display the image in the center
