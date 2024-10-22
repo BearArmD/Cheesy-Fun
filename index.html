@@ -125,15 +125,16 @@
         }
 
         function draw() {
-            background(255); // Clear the canvas
-            
             if (!isFunStarted) {
-                // Draw intersecting lines on the button to represent the ribbon
+                background(255); // Clear the canvas
+                // Draw intersecting lines on the button
                 stroke('lightyellow');
                 strokeWeight(5);
                 line(width / 2 - 75, height / 2, width / 2 + 75, height / 2); // Horizontal line
                 line(width / 2, height / 2 - 75, width / 2, height / 2 + 75); // Vertical line
             } else {
+                background(255); // Clear the canvas
+
                 for (let b of balloons) {
                     b.update();
                     b.display();
