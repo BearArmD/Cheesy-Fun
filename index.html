@@ -31,6 +31,17 @@
             color: white;
             text-align: center;
             z-index: 10;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Optional shadow for effect */
+        }
+        .bow {
+            position: absolute;
+            width: 30px;
+            height: 15px;
+            background-color: yellow; /* Yellow bow */
+            top: 30%; /* Position the bow */
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg); /* Center and rotate the bow */
+            z-index: 11;
         }
         #attribution {
             position: fixed;
@@ -43,12 +54,14 @@
 </head>
 <body>
     <div id="giftButton" onclick="startFun()">Unwrap Me!</div>
-    
+    <div class="bow"></div> <!-- Yellow bow -->
+
     <script>
         let balloons = [];
         let confetti = [];
         let music;
         let img; // Declare the image variable
+        let isFunStarted = false; // Flag to check if the fun has started
 
         function preload() {
             soundFormats('mp3');
@@ -57,10 +70,13 @@
         }
 
         function startFun() {
-            // Play the music and remove the gift button
-            music.play();
-            document.getElementById('giftButton').style.display = 'none'; // Hide the button
-            setup(); // Start the setup function
+            if (!isFunStarted) {
+                music.play(); // Play the music
+                document.getElementById('giftButton').style.display = 'none'; // Hide the button
+                document.querySelector('.bow').style.display = 'none'; // Hide the bow
+                isFunStarted = true; // Set flag to true
+                setup(); // Start the setup function
+            }
         }
 
         function setup() {
@@ -80,31 +96,33 @@
         }
 
         function draw() {
-            background(255);
-            for (let b of balloons) {
-                b.update();
-                b.display();
-            }
-            for (let c of confetti) {
-                c.update();
-                c.display();
-            }
+            if (isFunStarted) { // Check if the fun has started
+                background(255);
+                for (let b of balloons) {
+                    b.update();
+                    b.display();
+                }
+                for (let c of confetti) {
+                    c.update();
+                    c.display();
+                }
 
-            // Display the image in the center
-            if (img) {
-                image(img, width / 2 - img.width / 2, height / 2 - img.height / 2);
+                // Display the image in the center
+                if (img) {
+                    image(img, width / 2 - img.width / 2, height / 2 - img.height / 2);
+                }
+
+                // Display the cheese text centered below the image
+                textAlign(CENTER);
+                textSize(24);
+                fill(0); // Set text color to black
+                text("I reek of Cheese and whine! Yay!!", width / 2, height / 2 + img.height / 2 + 30); // Adjust the position as needed
+
+                // Display attribution text
+                textSize(12);
+                text("Music by: Bensound.com/royalty-free-music", width / 2, height - 40);
+                text("License code: MGIZKCEEOI9XHM90", width / 2, height - 20);
             }
-
-            // Display the cheese text centered below the image
-            textAlign(CENTER);
-            textSize(24);
-            fill(0); // Set text color to black
-            text("I reek of Cheese and whine! Yay!!", width / 2, height / 2 + img.height / 2 + 30); // Adjust the position as needed
-
-            // Display attribution text
-            textSize(12);
-            text("Music by: Bensound.com/royalty-free-music", width / 2, height - 40);
-            text("License code: MGIZKCEEOI9XHM90", width / 2, height - 20);
         }
 
         class Balloon {
