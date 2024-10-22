@@ -1,123 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cheesy Fun!</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-            background-color: #f0e68c;
-        }
-    </style>
-</head>
-<body>
-    <script>
-        let balloons = [];
-        let confetti = [];
-        let music;
-        let img; // Declare the image variable
+let balloons = [];
+let confetti = [];
+let music;
+let img; // Declare the image variable
 
-        function preload() {
-            soundFormats('mp3');
-            music = loadSound('audio/jazzyfrenchy.mp3'); // Load the music
-            img = loadImage('images/cheesy.png'); // Load the image
-        }
+function preload() {
+    soundFormats('mp3');
+    music = loadSound('audio/jazzyfrenchy.mp3'); // Load the music
+    img = loadImage('images/cheesy.png'); // Load the image
+}
 
-        function setup() {
-            createCanvas(windowWidth, windowHeight);
-            setTimeout(() => {
-                music.play();
-            }, 270); // Delay of 0.27 seconds
+function setup() {
+    createCanvas(windowWidth, windowHeight);
 
-            // Spawn balloons and confetti
-            for (let i = 0; i < 10; i++) {
+    // Spawn balloons and confetti
+    for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+            balloons.push(new Balloon());
+
+            // Start music when the first balloon is added
+            if (i === 0 && !music.isPlaying()) {
                 setTimeout(() => {
-                    balloons.push(new Balloon());
-                }, i * 500); // Stagger balloon spawn by 500ms
+                    music.play();
+                }, 270); // Delay of 0.27 seconds before playing music
             }
+        }, i * 500); // Stagger balloon release
+    }
 
-            // Spawn confetti
-            for (let i = 0; i < 100; i++) {
-                confetti.push(new Confetti());
-            }
-        }
+    for (let i = 0; i < 50; i++) {
+        confetti.push(new Confetti());
+    }
+}
 
-        function draw() {
-            background(255);
-            for (let b of balloons) {
-                b.update();
-                b.display();
-            }
-            for (let c of confetti) {
-                c.update();
-                c.display();
-            }
+function draw() {
+    background(255);
+    
+    // Draw balloons and confetti
+    for (let b of balloons) {
+        b.update();
+        b.display();
+    }
+    for (let c of confetti) {
+        c.update();
+        c.display();
+    }
+}
 
-            // Display the image in the center
-            if (img) {
-                image(img, width / 2 - img.width / 2, height / 2 - img.height / 2);
-            }
+// Balloon class (same as before)
+class Balloon {
+    constructor() {
+        this.x = random(width);
+        this.y = height;
+        this.size = random(40, 60);
+        this.speed = 2;
+    }
 
-            // Display the cheese text centered below the image
-            textAlign(CENTER);
-            textSize(24);
-            fill(0); // Set text color to black
-            text("I reek of Cheese and whine! Yay!!", width / 2, height / 2 + img.height / 2 + 30); // Adjust the position as needed
+    update() {
+        this.y -= this.speed;
+    }
 
-            // Display attribution text
-            textSize(12);
-            text("Music by: Bensound.com/royalty-free-music", width / 2, height - 40);
-            text("License code: MGIZKCEEOI9XHM90", width / 2, height - 20);
-        }
+    display() {
+        fill(255, 0, 0);
+        ellipse(this.x, this.y, this.size, this.size * 1.5);
+    }
+}
 
-        class Balloon {
-            constructor() {
-                this.x = random(width);
-                this.y = height;
-                this.size = random(40, 60);
-                this.speed = random(1, 3); // Random speed for balloons
-                this.color = color(random(255), random(255), random(255)); // Random color for balloons
-            }
+// Confetti class (same as before)
+class Confetti {
+    constructor() {
+        this.x = random(width);
+        this.y = random(height);
+        this.size = random(5, 15);
+        this.speed = 3;
+    }
 
-            update() {
-                this.y -= this.speed;
-                if (this.y < 0) {
-                    this.y = height; // Reset balloon position
-                }
-            }
+    update() {
+        this.y += this.speed;
+    }
 
-            display() {
-                fill(this.color);
-                ellipse(this.x, this.y, this.size, this.size * 1.5);
-            }
-        }
-
-        class Confetti {
-            constructor() {
-                this.x = random(width);
-                this.y = random(-height, 0); // Start above the canvas
-                this.size = random(5, 15);
-                this.speed = random(2, 5); // Random speed for confetti
-            }
-
-            update() {
-                this.y += this.speed;
-                if (this.y > height) {
-                    this.y = random(-height, 0); // Reset confetti position
-                    this.x = random(width); // Random x position
-                }
-            }
-
-            display() {
-                fill(random(255), random(255), random(255));
-                rect(this.x, this.y, this.size, this.size);
-            }
-        }
-    </script>
-</body>
-</html>
+    display() {
+        fill(random(255), random(255), random(255));
+        rect(this.x, this.y, this.size, this.size);
+    }
+}
