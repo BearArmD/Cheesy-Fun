@@ -13,65 +13,6 @@
             font-family: Arial, sans-serif;
             background-color: #f0e68c;
         }
-        #giftButton {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 150px;
-            height: 150px;
-            background-color: purple; /* Purple package */
-            border: 5px solid lightblue; /* Light blue ribbon */
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Optional shadow for effect */
-        }
-        #giftTag {
-            position: absolute;
-            top: 55%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 18px;
-            color: white;
-            z-index: 12;
-            text-align: center;
-        }
-        .bow {
-            position: absolute;
-            top: 40%; /* Position the bow closer to the package */
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 11;
-            display: flex; /* Use flex to align the bow parts */
-        }
-        .bow .left, .bow .right {
-            width: 40px; /* Adjusted width */
-            height: 35px; /* Adjusted height */
-            background-color: yellow; /* Yellow color for the bow */
-            position: relative;
-            border-radius: 50%;
-            margin: 0 5px; /* Space between bow parts */
-        }
-        .bow .left {
-            transform: rotate(-45deg);
-        }
-        .bow .right {
-            transform: rotate(45deg);
-        }
-        .bow .knot {
-            width: 15px;
-            height: 15px;
-            background-color: yellow; /* Yellow color for the knot */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-        }
         #attribution {
             position: fixed;
             bottom: 10px;
@@ -82,21 +23,12 @@
     </style>
 </head>
 <body>
-    <div id="giftButton" onclick="startFun()">
-        <div class="bow">
-            <div class="left"></div>
-            <div class="right"></div>
-            <div class="knot"></div> <!-- Center knot for the bow -->
-        </div>
-    </div>
-    <div id="giftTag">Unwrap</div>
-
     <script>
         let balloons = [];
         let confetti = [];
         let music;
         let img; // Declare the image variable
-        let isFunStarted = false; // Flag to check if the fun has started
+        let isFunStarted = true; // Flag to check if the fun has started (default to true)
 
         function preload() {
             soundFormats('mp3');
@@ -104,21 +36,11 @@
             img = loadImage('images/cheesy.png'); // Load the image
         }
 
-        function startFun() {
-            if (!isFunStarted) {
-                document.getElementById('giftButton').style.display = 'none'; // Hide the button
-                document.getElementById('giftTag').style.display = 'none'; // Hide the tag
-                isFunStarted = true; // Set flag to true
-                setup(); // Start the setup function
-
-                // Jump to 10 seconds and play the music
-                music.play();
-                music.jump(13); // Jump to 10 seconds into the music
-            }
-        }
-
         function setup() {
             createCanvas(windowWidth, windowHeight);
+            music.play();
+            music.jump(13); // Start the music 13 seconds in
+
             setTimeout(() => {
                 // Spawn balloons
                 for (let i = 0; i < 10; i++) {
@@ -134,6 +56,12 @@
         }
 
         function draw() {
+            // Draw intersecting lines to represent the ribbon on the background
+            stroke('lightyellow');
+            strokeWeight(5);
+            line(width / 2 - 75, height / 2, width / 2 + 75, height / 2); // Horizontal line
+            line(width / 2, height / 2 - 75, width / 2, height / 2 + 75); // Vertical line
+
             if (isFunStarted) {
                 background(255);
 
