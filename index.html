@@ -42,8 +42,8 @@
             display: flex; /* Use flex to align the bow parts */
         }
         .bow .left, .bow .right {
-            width: 40px;
-            height: 35px;
+            width: 40px; /* Adjusted width */
+            height: 35px; /* Adjusted height */
             background-color: yellow; /* Yellow color for the bow */
             position: relative;
             border-radius: 50%;
@@ -81,7 +81,7 @@
         <div class="right"></div>
         <div class="knot"></div> <!-- Center knot for the bow -->
     </div> <!-- Yellow bow -->
-
+    
     <script>
         let balloons = [];
         let confetti = [];
@@ -102,8 +102,9 @@
                 isFunStarted = true; // Set flag to true
                 setup(); // Start the setup function
 
-                music.jump(15); // Jump to 10 seconds into the music
-                music.play(); // Play the music
+                // Jump to 10 seconds and play the music
+                music.play();
+                music.jump(10); // Jump to 10 seconds into the music
             }
         }
 
