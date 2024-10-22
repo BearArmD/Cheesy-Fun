@@ -31,37 +31,24 @@
             z-index: 10;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Optional shadow for effect */
         }
-        .bow {
+        .ribbon {
             position: absolute;
-            top: 40%; /* Position the bow closer to the package */
-            left: 50%;
-            transform: translate(-50%, -50%);
+            background-color: yellow; /* Ribbon color */
             z-index: 11;
-            display: flex; /* Use flex to align the bow parts */
         }
-        .bow .left, .bow .right {
-            width: 40px; /* Adjusted width */
-            height: 35px; /* Adjusted height */
-            background-color: yellow; /* Yellow color for the bow */
-            position: relative;
-            border-radius: 50%;
-            margin: 0 5px; /* Space between bow parts */
+        .ribbon.horizontal {
+            height: 5px; /* Height of horizontal ribbon */
+            width: 100%; /* Full width of button */
+            top: 50%; /* Center vertically */
+            left: 0;
+            transform: translateY(-50%);
         }
-        .bow .left {
-            transform: rotate(-45deg);
-        }
-        .bow .right {
-            transform: rotate(45deg);
-        }
-        .bow .knot {
-            width: 15px;
-            height: 15px;
-            background-color: yellow; /* Yellow color for the knot */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
+        .ribbon.vertical {
+            width: 5px; /* Width of vertical ribbon */
+            height: 100%; /* Full height of button */
+            left: 50%; /* Center horizontally */
+            top: 0;
+            transform: translateX(-50%);
         }
         #tag {
             position: absolute;
@@ -79,53 +66,16 @@
     </style>
 </head>
 <body>
-    <div id="giftButton" onclick="startFun()"></div>
-    <div class="bow">
-        <div class="left"></div>
-        <div class="right"></div>
-        <div class="knot"></div> <!-- Center knot for the bow -->
-    </div> <!-- Yellow bow -->
+    <div id="giftButton" onclick="startFun()">
+        <div class="ribbon horizontal"></div> <!-- Horizontal ribbon -->
+        <div class="ribbon vertical"></div> <!-- Vertical ribbon -->
+    </div>
     <div id="tag">Unwrap Me!</div> <!-- Tag beside the gift button -->
 
     <script>
         function startFun() {
             window.location.href = 'startfun.html'; // Redirect to startfun.html
         }
-
-        function drawRibbon() {
-            const giftButton = document.getElementById('giftButton');
-            const rect = giftButton.getBoundingClientRect(); // Get position of the button
-
-            // Create a new canvas element
-            const canvas = document.createElement('canvas');
-            canvas.width = rect.width; // Width of the gift button
-            canvas.height = rect.height; // Height of the gift button
-            canvas.style.position = 'absolute';
-            canvas.style.top = `${rect.top}px`;
-            canvas.style.left = `${rect.left}px`;
-            canvas.style.zIndex = 9; // Below the gift button
-
-            const context = canvas.getContext('2d');
-
-            // Draw horizontal line
-            context.strokeStyle = 'yellow'; // Color of the ribbon
-            context.lineWidth = 5;
-            context.beginPath();
-            context.moveTo(0, canvas.height / 2); // Start at left center
-            context.lineTo(canvas.width, canvas.height / 2); // End at right center
-            context.stroke();
-
-            // Draw vertical line
-            context.beginPath();
-            context.moveTo(canvas.width / 2, 0); // Start at top center
-            context.lineTo(canvas.width / 2, canvas.height); // End at bottom center
-            context.stroke();
-
-            document.body.appendChild(canvas); // Add the canvas to the body
-        }
-
-        // Call drawRibbon to display it after the window loads
-        window.onload = drawRibbon;
     </script>
 </body>
 </html>
