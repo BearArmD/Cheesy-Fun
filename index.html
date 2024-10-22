@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cheesy Fun!</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -65,160 +63,34 @@
             transform: translate(-50%, -50%);
             border-radius: 50%;
         }
-        .tag {
+        #tag {
             position: absolute;
-            top: 30%;
-            left: 120%;
-            transform: translate(-50%, -50%);
+            top: 50%;
+            left: calc(50% + 80px); /* Position to the right of the gift button */
+            transform: translateY(-50%);
             background-color: white; /* White tag */
-            border: 2px solid #ccc;
-            padding: 5px 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            font-size: 16px;
-            color: black; /* Text color */
-            white-space: nowrap; /* Prevents text from wrapping */
-        }
-        #attribution {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            font-size: 12px;
-            color: #333;
+            padding: 5px 10px; /* Padding for the tag */
+            border-radius: 5px; /* Rounded corners for the tag */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Optional shadow */
+            z-index: 12; /* Above the gift button */
+            font-size: 16px; /* Tag font size */
+            color: black; /* Tag text color */
         }
     </style>
 </head>
 <body>
-    <div id="giftButton" onclick="startFun()">Unwrap Me!</div>
+    <div id="giftButton" onclick="startFun()"></div>
     <div class="bow">
         <div class="left"></div>
         <div class="right"></div>
         <div class="knot"></div> <!-- Center knot for the bow -->
     </div> <!-- Yellow bow -->
-    <div class="tag">Unwrap!</div> <!-- Tag with text -->
-    
+    <div id="tag">Unwrap Me!</div> <!-- Tag beside the gift button -->
+
     <script>
-        let balloons = [];
-        let confetti = [];
-        let music;
-        let img; // Declare the image variable
-        let isFunStarted = false; // Flag to check if the fun has started
-
-        function preload() {
-            soundFormats('mp3');
-            music = loadSound('audio/jazzyfrenchy.mp3'); // Load the music
-            img = loadImage('images/cheesy.png'); // Load the image
-        }
-
         function startFun() {
-            if (!isFunStarted) {
-                document.getElementById('giftButton').style.display = 'none'; // Hide the button
-                document.querySelector('.bow').style.display = 'none'; // Hide the bow
-                document.querySelector('.tag').style.display = 'none'; // Hide the tag
-                isFunStarted = true; // Set flag to true
-                setup(); // Start the setup function
-
-                // Jump to 10 seconds and play the music
-                music.play();
-                music.jump(13); // Jump to 10 seconds into the music
-            }
-        }
-
-        function setup() {
-            createCanvas(windowWidth, windowHeight);
-            setTimeout(() => {
-                // Spawn balloons
-                for (let i = 0; i < 10; i++) {
-                    setTimeout(() => {
-                        balloons.push(new Balloon());
-                    }, i * 500); // Stagger balloon spawn by 500ms
-                }
-                // Spawn confetti
-                for (let i = 0; i < 100; i++) {
-                    confetti.push(new Confetti());
-                }
-            }, 200); // Delay the first balloon by 0.2 seconds
-        }
-
-        function draw() {
-            // Draw intersecting lines on the package to represent the ribbon
-            stroke('lightyellow');
-            strokeWeight(5);
-            line(width / 2 - 75, height / 2, width / 2 + 75, height / 2); // Horizontal line
-            line(width / 2, height / 2 - 75, width / 2, height / 2 + 75); // Vertical line
-
-            if (isFunStarted) { // Check if the fun has started
-                background(255);
-
-                for (let b of balloons) {
-                    b.update();
-                    b.display();
-                }
-                for (let c of confetti) {
-                    c.update();
-                    c.display();
-                }
-
-                // Display the image in the center
-                if (img) {
-                    image(img, width / 2 - img.width / 2, height / 2 - img.height / 2);
-                }
-
-                // Display the cheese text centered below the image
-                textAlign(CENTER);
-                textSize(24);
-                fill(0); // Set text color to black
-                text("I reek of Cheese and whine! Yay!!", width / 2, height / 2 + img.height / 2 + 30); // Adjust the position as needed
-
-                // Display attribution text
-                textSize(12);
-                text("Music by: Bensound.com/royalty-free-music", width / 2, height - 40);
-                text("License code: MGIZKCEEOI9XHM90", width / 2, height - 20);
-            }
-        }
-
-        class Balloon {
-            constructor() {
-                this.x = random(width);
-                this.y = height;
-                this.size = random(40, 60);
-                this.speed = random(1, 3); // Random speed for balloons
-                this.color = color(random(255), random(255), random(255)); // Random color for balloons
-            }
-
-            update() {
-                this.y -= this.speed;
-                if (this.y < 0) {
-                    this.y = height; // Reset balloon position
-                }
-            }
-
-            display() {
-                fill(this.color);
-                ellipse(this.x, this.y, this.size, this.size * 1.5);
-            }
-        }
-
-        class Confetti {
-            constructor() {
-                this.x = random(width);
-                this.y = random(-height, 0); // Start above the canvas
-                this.size = random(5, 15);
-                this.speed = random(2, 5); // Random speed for confetti
-            }
-
-            update() {
-                this.y += this.speed;
-                if (this.y > height) {
-                    this.y = random(-height, 0); // Reset confetti position
-                    this.x = random(width); // Random x position
-                }
-            }
-
-            display() {
-                fill(random(255), random(255), random(255));
-                rect(this.x, this.y, this.size, this.size);
-            }
+            // Logic for starting the fun goes here
+            console.log("Fun started!"); // Placeholder for the actual functionality
         }
     </script>
 </body>
