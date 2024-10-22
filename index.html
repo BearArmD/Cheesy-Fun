@@ -35,13 +35,23 @@
         }
         .bow {
             position: absolute;
-            width: 30px;
-            height: 15px;
-            background-color: yellow; /* Yellow bow */
-            top: 30%; /* Position the bow */
+            top: 15%; /* Position the bow above the package */
             left: 50%;
-            transform: translate(-50%, -50%) rotate(45deg); /* Center and rotate the bow */
+            transform: translate(-50%, -50%);
             z-index: 11;
+        }
+        .bow .left, .bow .right {
+            width: 30px;
+            height: 30px;
+            background-color: yellow; /* Yellow color for the bow */
+            position: absolute;
+            border-radius: 50%;
+        }
+        .bow .left {
+            transform: translate(-50%, -50%) rotate(-45deg); /* Position and rotate left bow */
+        }
+        .bow .right {
+            transform: translate(50%, -50%) rotate(45deg); /* Position and rotate right bow */
         }
         #attribution {
             position: fixed;
@@ -54,7 +64,10 @@
 </head>
 <body>
     <div id="giftButton" onclick="startFun()">Unwrap Me!</div>
-    <div class="bow"></div> <!-- Yellow bow -->
+    <div class="bow">
+        <div class="left"></div>
+        <div class="right"></div>
+    </div> <!-- Yellow bow -->
 
     <script>
         let balloons = [];
@@ -71,11 +84,13 @@
 
         function startFun() {
             if (!isFunStarted) {
-                music.play(); // Play the music
                 document.getElementById('giftButton').style.display = 'none'; // Hide the button
                 document.querySelector('.bow').style.display = 'none'; // Hide the bow
                 isFunStarted = true; // Set flag to true
                 setup(); // Start the setup function
+
+                music.jump(8); // Jump to 8 seconds into the music
+                music.play(); // Play the music
             }
         }
 
