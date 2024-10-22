@@ -21,27 +21,31 @@
         let confetti = [];
         let music;
         let img;
-        let musicPlayed = false; // Flag to track if the music has been played
+        let musicPlayed = false;
 
         function preload() {
             soundFormats('mp3');
-            music = loadSound('audio/jazzyfrenchy.mp3'); // Load the music
-            img = loadImage('images/cheesy.png'); // Load the image
+            music = loadSound('audio/jazzyfrenchy.mp3'); 
+            img = loadImage('images/cheesy.png');
         }
 
         function setup() {
             createCanvas(windowWidth, windowHeight);
 
-            // Delay the first balloon's appearance by 0.2 seconds
+            // Start music with volume at 0 (muted)
+            music.setVolume(0);
+            music.play();
+            setTimeout(() => music.setVolume(1, 1.5), 200); // Fade in the volume after 200ms
+
+            // Spawn balloons with 0.2 second delay for the first one
             setTimeout(() => {
                 balloons.push(new Balloon());
-            }, 200); 
+            }, 200);
 
-            // Additional balloons added after the first one every 500ms
             for (let i = 1; i < 10; i++) {
                 setTimeout(() => {
                     balloons.push(new Balloon());
-                }, i * 500); 
+                }, i * 500);
             }
 
             // Spawn confetti
@@ -55,31 +59,21 @@
             for (let b of balloons) {
                 b.update();
                 b.display();
-
-                // Play the music once when the first balloon is moving
-                if (!musicPlayed && balloons.length > 0 && !music.isPlaying()) {
-                    music.play();
-                    musicPlayed = true; // Ensure it only plays once
-                }
             }
-
             for (let c of confetti) {
                 c.update();
                 c.display();
             }
 
-            // Display the image in the center
             if (img) {
                 image(img, width / 2 - img.width / 2, height / 2 - img.height / 2);
             }
 
-            // Display the text below the image
             textAlign(CENTER);
             textSize(24);
-            fill(0); // Set text color to black
+            fill(0);
             text("I reek of Cheese and whine! Yay!!", width / 2, height / 2 + img.height / 2 + 30);
 
-            // Display attribution text
             textSize(12);
             text("Music by: Bensound.com/royalty-free-music", width / 2, height - 40);
             text("License code: MGIZKCEEOI9XHM90", width / 2, height - 20);
@@ -90,14 +84,14 @@
                 this.x = random(width);
                 this.y = height;
                 this.size = random(40, 60);
-                this.speed = random(1, 3); // Random speed for balloons
-                this.color = color(random(255), random(255), random(255)); // Random color for balloons
+                this.speed = random(1, 3);
+                this.color = color(random(255), random(255), random(255));
             }
 
             update() {
                 this.y -= this.speed;
                 if (this.y < 0) {
-                    this.y = height; // Reset balloon position
+                    this.y = height;
                 }
             }
 
@@ -110,16 +104,16 @@
         class Confetti {
             constructor() {
                 this.x = random(width);
-                this.y = random(-height, 0); // Start above the canvas
+                this.y = random(-height, 0);
                 this.size = random(5, 15);
-                this.speed = random(2, 5); // Random speed for confetti
+                this.speed = random(2, 5);
             }
 
             update() {
                 this.y += this.speed;
                 if (this.y > height) {
-                    this.y = random(-height, 0); // Reset confetti position
-                    this.x = random(width); // Random x position
+                    this.y = random(-height, 0);
+                    this.x = random(width);
                 }
             }
 
