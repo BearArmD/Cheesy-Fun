@@ -32,16 +32,16 @@
         function setup() {
             createCanvas(windowWidth, windowHeight);
 
-            // Delayed spawning of the first balloon (0.2 seconds)
+            // Delay the first balloon's appearance by 0.2 seconds
             setTimeout(() => {
                 balloons.push(new Balloon());
-            }, 200); // Delay of 0.2 seconds for the first balloon
+            }, 200); 
 
-            // Spawn more balloons after the first one, staggered by 500ms each
+            // Additional balloons added after the first one every 500ms
             for (let i = 1; i < 10; i++) {
                 setTimeout(() => {
                     balloons.push(new Balloon());
-                }, i * 500); // Stagger the subsequent balloons by 500ms
+                }, i * 500); 
             }
 
             // Spawn confetti
@@ -56,12 +56,10 @@
                 b.update();
                 b.display();
 
-                // Trigger the music when the first balloon is added and moving
-                if (!musicPlayed && balloons.length > 0) {
-                    if (!music.isPlaying()) {
-                        music.play();
-                        musicPlayed = true; // Set the flag to true to prevent re-triggering
-                    }
+                // Play the music once when the first balloon is moving
+                if (!musicPlayed && balloons.length > 0 && !music.isPlaying()) {
+                    music.play();
+                    musicPlayed = true; // Ensure it only plays once
                 }
             }
 
@@ -75,11 +73,11 @@
                 image(img, width / 2 - img.width / 2, height / 2 - img.height / 2);
             }
 
-            // Display the cheese text centered below the image
+            // Display the text below the image
             textAlign(CENTER);
             textSize(24);
             fill(0); // Set text color to black
-            text("I reek of Cheese and whine! Yay!!", width / 2, height / 2 + img.height / 2 + 30); // Adjust the position as needed
+            text("I reek of Cheese and whine! Yay!!", width / 2, height / 2 + img.height / 2 + 30);
 
             // Display attribution text
             textSize(12);
@@ -99,7 +97,7 @@
             update() {
                 this.y -= this.speed;
                 if (this.y < 0) {
-                    this.y = height; // Reset balloon position when off-screen
+                    this.y = height; // Reset balloon position
                 }
             }
 
