@@ -125,22 +125,24 @@
         }
 
         function draw() {
-            // Draw the intersecting lines on the gift button to represent the ribbon
-            stroke('lightyellow');
-            strokeWeight(5);
-            const buttonX = width / 2; // Center X of the button
-            const buttonY = height / 2; // Center Y of the button
-            const buttonWidth = 150; // Width of the button
-            const buttonHeight = 150; // Height of the button
-
-            // Draw the horizontal line across the button
-            line(buttonX - buttonWidth / 2, buttonY, buttonX + buttonWidth / 2, buttonY);
-            // Draw the vertical line across the button
-            line(buttonX, buttonY - buttonHeight / 2, buttonX, buttonY + buttonHeight / 2);
+            background(255); // Clear the background each frame
             
-            if (isFunStarted) { // Check if the fun has started
-                background(255);
+            // Draw the intersecting lines on the gift button to represent the ribbon
+            if (isFunStarted) {
+                const buttonX = width / 2; // Center X of the button
+                const buttonY = height / 2; // Center Y of the button
+                const buttonWidth = 150; // Width of the button
+                const buttonHeight = 150; // Height of the button
 
+                stroke('lightyellow');
+                strokeWeight(5);
+                // Draw the horizontal line across the button
+                line(buttonX - buttonWidth / 2, buttonY, buttonX + buttonWidth / 2, buttonY);
+                // Draw the vertical line across the button
+                line(buttonX, buttonY - buttonHeight / 2, buttonX, buttonY + buttonHeight / 2);
+            }
+
+            if (isFunStarted) { // Check if the fun has started
                 for (let b of balloons) {
                     b.update();
                     b.display();
