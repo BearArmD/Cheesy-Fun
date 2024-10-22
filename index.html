@@ -87,33 +87,34 @@
     </div> <!-- Yellow bow -->
     <div id="tag">Unwrap Me!</div> <!-- Tag beside the gift button -->
 
+    <canvas id="ribbonCanvas" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9;"></canvas>
+
     <script>
         function startFun() {
             window.location.href = 'startfun.html'; // Redirect to startfun.html
         }
 
         function drawRibbon() {
-            // Draw intersecting lines on the package to represent the ribbon
-            const canvas = document.createElement('canvas');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            const canvas = document.getElementById('ribbonCanvas');
             const context = canvas.getContext('2d');
 
+            // Set canvas size
+            canvas.width = 150; // Width of the gift button
+            canvas.height = 150; // Height of the gift button
+
             // Draw horizontal line
-            context.strokeStyle = 'lightyellow';
+            context.strokeStyle = 'yellow'; // Color of the ribbon
             context.lineWidth = 5;
             context.beginPath();
-            context.moveTo(window.innerWidth / 2 - 75, window.innerHeight / 2);
-            context.lineTo(window.innerWidth / 2 + 75, window.innerHeight / 2);
+            context.moveTo(0, canvas.height / 2); // Start at left center
+            context.lineTo(canvas.width, canvas.height / 2); // End at right center
             context.stroke();
 
             // Draw vertical line
             context.beginPath();
-            context.moveTo(window.innerWidth / 2, window.innerHeight / 2 - 75);
-            context.lineTo(window.innerWidth / 2, window.innerHeight / 2 + 75);
+            context.moveTo(canvas.width / 2, 0); // Start at top center
+            context.lineTo(canvas.width / 2, canvas.height); // End at bottom center
             context.stroke();
-
-            document.body.appendChild(canvas);
         }
 
         // Call drawRibbon to display it on load
