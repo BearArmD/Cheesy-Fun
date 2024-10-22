@@ -21,21 +21,28 @@
             width: 150px;
             height: 150px;
             background-color: purple; /* Purple package */
-            border: 5px solid lightyellow; /* Light yellow ribbon */
+            border: 5px solid lightblue; /* Light blue ribbon */
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 18px;
-            color: white;
-            text-align: center;
             z-index: 10;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Optional shadow for effect */
         }
+        #giftTag {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: white;
+            z-index: 12;
+            text-align: center;
+        }
         .bow {
             position: absolute;
-            top: 35%; /* Position the bow closer to the package */
+            top: 40%; /* Position the bow closer to the package */
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 11;
@@ -65,53 +72,6 @@
             transform: translate(-50%, -50%);
             border-radius: 50%;
         }
-        .ribbon-lines {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 160px; /* Match the size of the gift box */
-            height: 160px;
-            transform: translate(-50%, -50%);
-            z-index: 9;
-        }
-        .ribbon-lines::before,
-        .ribbon-lines::after {
-            content: '';
-            position: absolute;
-            background-color: lightyellow; /* Light yellow ribbon color */
-        }
-        .ribbon-lines::before {
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 5px; /* Horizontal ribbon */
-            transform: translateY(-50%);
-        }
-        .ribbon-lines::after {
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 5px; /* Vertical ribbon */
-            transform: translateX(-50%);
-        }
-        #tag {
-            position: absolute;
-            left: 57%;
-            top: 52%;
-            transform: translate(-50%, -50%) rotate(-20deg);
-            width: 50px;
-            height: 25px;
-            background-color: white;
-            border: 2px dashed lightblue;
-            color: purple;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-            font-weight: bold;
-            z-index: 12;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
         #attribution {
             position: fixed;
             bottom: 10px;
@@ -122,14 +82,14 @@
     </style>
 </head>
 <body>
-    <div id="giftButton" onclick="startFun()">Unwrap Me!</div>
-    <div class="bow">
-        <div class="left"></div>
-        <div class="right"></div>
-        <div class="knot"></div> <!-- Center knot for the bow -->
+    <div id="giftButton" onclick="startFun()">
+        <div class="bow">
+            <div class="left"></div>
+            <div class="right"></div>
+            <div class="knot"></div> <!-- Center knot for the bow -->
+        </div>
     </div>
-    <div class="ribbon-lines"></div> <!-- Ribbon lines around the package -->
-    <div id="tag">Unwrap!</div> <!-- Tag beside the box -->
+    <div id="giftTag">Unwrap</div>
 
     <script>
         let balloons = [];
@@ -147,8 +107,7 @@
         function startFun() {
             if (!isFunStarted) {
                 document.getElementById('giftButton').style.display = 'none'; // Hide the button
-                document.querySelector('.bow').style.display = 'none'; // Hide the bow
-                document.getElementById('tag').style.display = 'none'; // Hide the tag
+                document.getElementById('giftTag').style.display = 'none'; // Hide the tag
                 isFunStarted = true; // Set flag to true
                 setup(); // Start the setup function
 
@@ -175,7 +134,7 @@
         }
 
         function draw() {
-            if (isFunStarted) { // Check if the fun has started
+            if (isFunStarted) {
                 background(255);
 
                 for (let b of balloons) {
