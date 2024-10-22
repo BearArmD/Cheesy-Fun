@@ -134,15 +134,13 @@
                 const buttonWidth = 150; // Width of the button
                 const buttonHeight = 150; // Height of the button
 
-                stroke('lightyellow');
+                stroke('lightyellow'); // Keep the light yellow color for the lines
                 strokeWeight(5);
                 // Draw the horizontal line across the button
                 line(buttonX - buttonWidth / 2, buttonY, buttonX + buttonWidth / 2, buttonY);
                 // Draw the vertical line across the button
                 line(buttonX, buttonY - buttonHeight / 2, buttonX, buttonY + buttonHeight / 2);
-            }
-
-            if (isFunStarted) { // Check if the fun has started
+            } else { // If the fun has started
                 // Display the image in the center
                 if (img) {
                     image(img, width / 2 - img.width / 2, height / 2 - img.height / 2);
