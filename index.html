@@ -125,22 +125,24 @@
         }
 
         function draw() {
-            background(255); // Clear the background each frame
-            
-            if (!isFunStarted) {
-                // Draw the intersecting lines on the gift button to represent the ribbon
-                const buttonX = width / 2; // Center X of the button
-                const buttonY = height / 2; // Center Y of the button
-                const buttonWidth = 150; // Width of the button
-                const buttonHeight = 150; // Height of the button
+            if (isFunStarted) { // Check if the fun has started
+                background(255);
 
-                stroke('lightyellow'); // Keep the light yellow color for the lines
+                // Draw intersecting lines on the package to represent the ribbon
+                stroke('lightyellow');
                 strokeWeight(5);
-                // Draw the horizontal line across the button
-                line(buttonX - buttonWidth / 2, buttonY, buttonX + buttonWidth / 2, buttonY);
-                // Draw the vertical line across the button
-                line(buttonX, buttonY - buttonHeight / 2, buttonX, buttonY + buttonHeight / 2);
-            } else { // If the fun has started
+                line(width / 2 - 75, height / 2, width / 2 + 75, height / 2); // Horizontal line
+                line(width / 2, height / 2 - 75, width / 2, height / 2 + 75); // Vertical line
+
+                for (let b of balloons) {
+                    b.update();
+                    b.display();
+                }
+                for (let c of confetti) {
+                    c.update();
+                    c.display();
+                }
+
                 // Display the image in the center
                 if (img) {
                     image(img, width / 2 - img.width / 2, height / 2 - img.height / 2);
@@ -156,16 +158,6 @@
                 textSize(12);
                 text("Music by: Bensound.com/royalty-free-music", width / 2, height - 40);
                 text("License code: MGIZKCEEOI9XHM90", width / 2, height - 20);
-
-                // Draw balloons and confetti
-                for (let b of balloons) {
-                    b.update();
-                    b.display();
-                }
-                for (let c of confetti) {
-                    c.update();
-                    c.display();
-                }
             }
         }
 
