@@ -125,46 +125,29 @@
         }
 
         function draw() {
-            background(255);
-            
-            // Draw the light yellow lines around balloons/confetti
+            // Draw the intersecting lines on the gift button to represent the ribbon
             stroke('lightyellow');
             strokeWeight(5);
-            for (let b of balloons) {
-                b.display();
-            }
-            for (let c of confetti) {
-                c.display();
-            }
+            const buttonX = width / 2; // Center X of the button
+            const buttonY = height / 2; // Center Y of the button
+            const buttonWidth = 150; // Width of the button
+            const buttonHeight = 150; // Height of the button
 
-            // Check if the fun has started
-            if (!isFunStarted) {
-                // Draw intersecting lines on the package to represent the ribbon
-                stroke('yellow'); // Change to yellow
-                strokeWeight(5);
-                line(width / 2 - 75, height / 2, width / 2 + 75, height / 2); // Horizontal line
-                line(width / 2, height / 2 - 75, width / 2, height / 2 + 75); // Vertical line
-
-                // Draw the gift button
-                fill('purple'); // Set button color
-                rect(width / 2 - 75, height / 2 - 75, 150, 150, 10); // Draw package
-                stroke('lightblue'); // Set ribbon color
-                strokeWeight(5);
-                noFill();
-                rect(width / 2 - 75, height / 2 - 75, 150, 150, 10); // Draw package border
-
-                // Draw bow
-                noStroke();
-                fill('yellow');
-                ellipse(width / 2 - 40, height / 2 - 15, 40, 35); // Left bow
-                ellipse(width / 2 + 40, height / 2 - 15, 40, 35); // Right bow
-                fill('yellow');
-                ellipse(width / 2, height / 2, 15, 15); // Center knot
-            }
-
+            // Draw the horizontal line across the button
+            line(buttonX - buttonWidth / 2, buttonY, buttonX + buttonWidth / 2, buttonY);
+            // Draw the vertical line across the button
+            line(buttonX, buttonY - buttonHeight / 2, buttonX, buttonY + buttonHeight / 2);
+            
             if (isFunStarted) { // Check if the fun has started
+                background(255);
+
                 for (let b of balloons) {
                     b.update();
+                    b.display();
+                }
+                for (let c of confetti) {
+                    c.update();
+                    c.display();
                 }
 
                 // Display the image in the center
