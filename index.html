@@ -35,23 +35,35 @@
         }
         .bow {
             position: absolute;
-            top: 15%; /* Position the bow above the package */
+            top: 10%; /* Position the bow above the package */
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 11;
+            display: flex; /* Use flex to align the bow parts */
         }
         .bow .left, .bow .right {
             width: 30px;
             height: 30px;
             background-color: yellow; /* Yellow color for the bow */
-            position: absolute;
+            position: relative;
             border-radius: 50%;
+            margin: 0 5px; /* Space between bow parts */
         }
         .bow .left {
-            transform: translate(-50%, -50%) rotate(-45deg); /* Position and rotate left bow */
+            transform: rotate(-45deg);
         }
         .bow .right {
-            transform: translate(50%, -50%) rotate(45deg); /* Position and rotate right bow */
+            transform: rotate(45deg);
+        }
+        .bow .knot {
+            width: 15px;
+            height: 15px;
+            background-color: yellow; /* Yellow color for the knot */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
         }
         #attribution {
             position: fixed;
@@ -67,6 +79,7 @@
     <div class="bow">
         <div class="left"></div>
         <div class="right"></div>
+        <div class="knot"></div> <!-- Center knot for the bow -->
     </div> <!-- Yellow bow -->
 
     <script>
