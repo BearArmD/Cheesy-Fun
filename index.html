@@ -1,121 +1,102 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheesy Fun!</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
     <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-      canvas {
-        display: block;
-      }
-      .attribution {
-        position: absolute;
-        bottom: 10px;
-        width: 100%;
-        text-align: center;
-        font-size: 12px;
-        color: #555;
-        font-family: Arial, sans-serif;
-      }
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #f0e68c;
+        }
+        #attribution {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 12px;
+            color: #333;
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <script>
-      let balloons = [];
-      let confetti = [];
-      let balloonCount = 10;
-      let confettiCount = 200;
-      let img;
-      let music;
+        let balloons = [];
+        let confetti = [];
+        let music;
 
-      function preload() {
-        // Load your image and music here
-        img = loadImage('https://i.imgur.com/F13z3yI.png');  // Ensure this URL is correct for the cheese image
-        music = loadSound('jazzyfrenchy.mp3');  // Use the locally stored mp3
-      }
-
-      function setup() {
-        createCanvas(windowWidth, windowHeight);
-        music.play(); // Play the background music when the sketch starts
-
-        for (let i = 0; i < balloonCount; i++) {
-          balloons.push(new Balloon());
+        function preload() {
+            music = loadSound('audio/jazzyfrenchy.mp3'); // Ensure the filename is correct
+            loadImage('images/cheesy.png'); // Ensure this path is correct
         }
 
-        for (let i = 0; i < confettiCount; i++) {
-          confetti.push(new Confetti());
-        }
-      }
-
-      function draw() {
-        background(255);
-        image(img, 50, 50, 100, 100);  // Display cheese image
-
-        // Draw balloons
-        for (let i = 0; i < balloons.length; i++) {
-          balloons[i].move();
-          balloons[i].display();
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+            setTimeout(() => {
+                music.play();
+                for (let i = 0; i < 10; i++) {
+                    balloons.push(new Balloon());
+                }
+                for (let i = 0; i < 50; i++) {
+                    confetti.push(new Confetti());
+                }
+            }, 270); // Delay of 0.27 seconds
         }
 
-        // Draw confetti
-        for (let i = 0; i < confetti.length; i++) {
-          confetti[i].move();
-          confetti[i].display();
-        }
-      }
-
-      class Balloon {
-        constructor() {
-          this.x = random(width);
-          this.y = height + random(100);
-          this.size = random(40, 80);
-          this.speed = random(1, 2); // Increase balloon speed
+        function draw() {
+            background(255);
+            for (let b of balloons) {
+                b.update();
+                b.display();
+            }
+            for (let c of confetti) {
+                c.update();
+                c.display();
+            }
         }
 
-        move() {
-          this.y -= this.speed;
-          if (this.y < -this.size) {
-            this.y = height + this.size;
-          }
+        class Balloon {
+            constructor() {
+                this.x = random(width);
+                this.y = height;
+                this.size = random(40, 60);
+                this.speed = 2; // Speed of the balloons
+            }
+
+            update() {
+                this.y -= this.speed;
+            }
+
+            display() {
+                fill(255, 0, 0);
+                ellipse(this.x, this.y, this.size, this.size * 1.5);
+            }
         }
 
-        display() {
-          fill(random(255), random(255), random(255), 150);
-          noStroke();
-          ellipse(this.x, this.y, this.size, this.size * 1.5);
-        }
-      }
+        class Confetti {
+            constructor() {
+                this.x = random(width);
+                this.y = random(height);
+                this.size = random(5, 15);
+                this.speed = 3; // Speed of the confetti
+            }
 
-      class Confetti {
-        constructor() {
-          this.x = random(width);
-          this.y = random(height);
-          this.size = random(5, 10);
-          this.speed = random(2, 3); // Increase confetti speed
-        }
+            update() {
+                this.y += this.speed;
+            }
 
-        move() {
-          this.y += this.speed;
-          if (this.y > height) {
-            this.y = -this.size;
-          }
+            display() {
+                fill(random(255), random(255), random(255));
+                rect(this.x, this.y, this.size, this.size);
+            }
         }
-
-        display() {
-          fill(random(255), random(255), random(255));
-          noStroke();
-          rect(this.x, this.y, this.size, this.size);
-        }
-      }
     </script>
-
-    <!-- Attribution Text -->
-    <div class="attribution">
-      Music by: <a href="https://www.bensound.com/royalty-free-music" target="_blank">Bensound.com/royalty-free-music</a><br>
-      License code: MGIZKCEEOI9XHM90
+    <div id="attribution">
+        Music by: <a href="https://www.bensound.com/royalty-free-music">Bensound.com</a><br>
+        License code: MGIZKCEEOI9XHM90
     </div>
-  </body>
+</body>
 </html>
